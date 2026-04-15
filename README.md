@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 公众号封面生成工具 - Cover Studio
 
-## Getting Started
+一个专业的微信公众号封面图生成工具，提供**网页模式**和**提示词模式**两种生成方式。
 
-First, run the development server:
+## 🎯 功能特性
 
+### 网页模式（HTML 封面）
+- **20 种精品模板**：极简、科幻、国潮、赛博朋克等多种风格
+- **实时双预览**：上方大图（2.35:1）+ 下方方图（1:1 中心裁剪）
+- **方图安全区**：红色虚线框显示朋友圈裁剪区域（x: 259~641）
+- **精细调节**：
+  - 文字内容：主标题/副标题/小标签，支持显示/隐藏
+  - 字体样式：10 种字体、字重、字号（20-80px）、字间距、行高
+  - 文字效果：阴影、渐变色、斜体
+  - 布局排版：水平/垂直对齐、宽度、边距、文字对齐
+  - 标签样式：背景色、圆角（0-20px）、内边距
+  - 模板主题：20 个模板选择、8 种预设配色
+- **高清导出**：支持高清（2x）和超清（3x）PNG 导出
+
+### 提示词模式（AI 生图）
+- **30 种 AI 提示词**：覆盖 7 大分类
+  - 插画与手绘（6 种）
+  - 设计与平面（7 种）
+  - 中国传统（4 种）
+  - 科幻与未来（3 种）
+  - 复古与怀旧（3 种）
+  - 氛围与情感（3 种）
+  - 特殊效果（4 种）
+- **一键复制**：完整提示词和负向提示词
+- **标题自动填充**：输入标题后自动填充到所有提示词
+- **模板关联**：提示词卡片显示对应的 HTML 模板编号
+
+## 🚀 快速开始
+
+### 本地开发
 ```bash
+cd wechat-cover
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+打开浏览器访问：http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 部署到 Vercel
+```bash
+npm run build
+vercel deploy
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📐 技术规格
 
-## Learn More
+### 画布尺寸
+- **推荐尺寸**：900 × 383 px（2.35:1）
+- **方图裁剪**：383 × 383 px（水平中心裁剪，x: 259~641）
 
-To learn more about Next.js, take a look at the following resources:
+### 导出规格
+| 质量 | 分辨率 | pixelRatio | 文件大小 |
+|------|--------|------------|----------|
+| 标准 | 900 × 383 px | 1x | ~80-200 KB |
+| 高清 | 1800 × 766 px | 2x | ~300-600 KB |
+| 超清 | 2700 × 1149 px | 3x | ~600 KB-1.5 MB |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 技术栈
+- **框架**：Next.js 14（App Router）
+- **样式**：Tailwind CSS v4
+- **UI 组件**：shadcn/ui
+- **状态管理**：Zustand + Immer
+- **图片导出**：html-to-image
+- **字体**：Google Fonts（10 种中英文字体）
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📁 项目结构
 
-## Deploy on Vercel
+```
+wechat-cover/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx      # 字体配置
+│   │   ├── page.tsx        # 主页面
+│   │   └── globals.css     # 全局样式（含 20 个模板 CSS）
+│   ├── components/
+│   │   ├── ControlPanel.tsx    # 左侧控制面板（4 个 Tab）
+│   │   ├── PromptModeView.tsx  # 提示词模式视图
+│   │   ├── TemplateCard.tsx    # 模板卡片（双预览）
+│   │   └── ui/                 # shadcn/ui 组件
+│   ├── data/
+│   │   └── prompts.ts      # 30 种 AI 提示词
+│   └── store/
+│       └── coverStore.ts   # Zustand 状态管理
+└── package.json
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎨 模板列表
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| 编号 | 名称 | 风格 | 字体 |
+|------|------|------|------|
+| T01 | 极简留白 | 极简/白 | Playfair Display |
+| T02 | 深空星云 | 科幻/暗 | Orbitron |
+| T03 | 橙色热浪 | 活力/渐变 | Bebas Neue |
+| T04 | 孟菲斯波普 | 波普/几何 | Orbitron |
+| T05 | 苹果玻璃态 | 透明/渐变 | Noto Sans SC |
+| T06 | 水墨流韵 | 国风/典雅 | Ma Shan Zheng |
+| T07 | 赛博霓虹 | 朋克/暗 | Orbitron |
+| T08 | 马卡龙粉彩 | 甜美/粉 | ZCOOL KuaiLe |
+| T09 | 矩阵终端 | 黑客/绿 | Source Code Pro |
+| T10 | 朱砂国潮 | 国潮/红金 | Noto Serif SC |
+| T11 | 午夜奢华 | 奢华/黑金 | Cinzel |
+| T12 | 银河梦境 | 宇宙/紫 | Noto Sans SC |
+| T13 | 包豪斯几何 | 构成/原色 | Bebas Neue |
+| T14 | 复古旅行 | 复古/暖 | ZCOOL QingKe |
+| T15 | 日出东方 | 日系/简 | Noto Sans SC |
+| T16 | 电影序章 | 影视/暗 | Playfair Display |
+| T17 | 糖果泡泡 | 波普/多彩 | ZCOOL KuaiLe |
+| T18 | 工程蓝图 | 技术/蓝 | Orbitron |
+| T19 | 极光极地 | 梦幻/冷 | Noto Sans SC |
+| T20 | 热血燃战 | 激情/红 | Bebas Neue |
+
+## 📝 使用说明
+
+### 网页模式
+1. 在顶部输入文章标题和副标题
+2. 点击左侧控制面板的 4 个 Tab 进行精细调节
+3. 右侧实时预览效果，方图安全区显示裁剪范围
+4. 点击"↓ 高清"或"↓ 超清"导出 PNG
+
+### 提示词模式
+1. 点击顶部"✦ 提示词模式"切换
+2. 输入文章标题（自动填充到所有提示词）
+3. 使用分类筛选快速找到想要的风格
+4. 点击"复制提示词"或"负向提示词"按钮
+5. 粘贴到 Midjourney / DALL-E 3 / Flux 等平台生成
+
+## ⚠️ 注意事项
+
+1. **方图安全区**：确保标题和主视觉在红色虚线框内，否则朋友圈分享时可能被裁剪
+2. **字体加载**：首次加载需要从 Google Fonts 下载字体，请耐心等待
+3. **导出时间**：超清导出可能需要 2-5 秒，请耐心等待
+4. **浏览器兼容**：推荐使用 Chrome / Edge / Safari 最新版
+
+## 📄 License
+
+MIT
