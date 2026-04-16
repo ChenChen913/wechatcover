@@ -101,7 +101,7 @@ export function defaultCoverConfig(): CoverConfig {
     },
     textBlock: {
       hAlign: 'left',
-      widthPercent: 55,
+      widthPercent: 75,
       vAlign: 'middle',
       paddingTop: 10,
       paddingBottom: 10,

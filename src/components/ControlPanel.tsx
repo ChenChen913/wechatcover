@@ -632,10 +632,10 @@ export const ControlPanel: React.FC = () => {
               value={[textBlock.widthPercent]}
               onValueChange={(v) => setTextBlock({ widthPercent: Array.isArray(v) ? v[0] : v })}
               min={25}
-              max={90}
+              max={98}
               step={1}
             />
-            <p className="text-[10px] text-muted-foreground">宽度越小，左右留白越多</p>
+            <p className="text-[10px] text-muted-foreground">宽度越小，左右留白越多；拉到 98% 几乎占满全宽</p>
           </div>
         </CardContent>
       </Card>
