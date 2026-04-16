@@ -142,7 +142,7 @@
 .c01{background:#fdfcfaf0;display:flex;flex-direction:column;justify-content:center;padding:0 2%;}
 .c01-bg{position:absolute;inset:0;background:radial-gradient(circle at 100% 0%,rgba(0,0,0,.03),transparent 50%);}
 .c01-line{position:absolute;top:20%;bottom:20%;left:8%;width:1px;background:#e5e5e5;}
-.c01-num{position:absolute;left:calc(8% - clamp(14px,3cqw,30px));top:15%;font-family:'Playfair Display',serif;font-size:clamp(16px,4cqw,36px);font-style:italic;color:#b3b3b3;transform:rotate(-90deg) translateX(-100%);transform-origin:top left;}
+.c01-num{display:none;}
 .c01-tag{font-family:'Cinzel',serif;font-size:clamp(9px,1.5cqw,14px);letter-spacing:.4em;color:#8c8c8c;margin-bottom:3%;font-weight:700;}
 .c01-title{font-family:'Noto Serif SC',serif;font-weight:700;font-size:clamp(22px,6cqw,56px);color:#1a1a1a;line-height:1.25;position:relative;z-index:1;letter-spacing:2px;}
 .c01-sub{font-size:clamp(10px,1.8cqw,15px);color:#666;margin-top:4%;font-weight:300;letter-spacing:.1em;}
@@ -468,6 +468,11 @@
 .c37-tag{font-family:'Roboto Mono',monospace;font-size:12px;color:#3b82f6;margin-bottom:12px;letter-spacing:2px;}
 .c37-title{font-family:'Noto Sans SC',sans-serif;font-weight:700;font-size:clamp(24px,6cqw,56px);color:#0f172a;line-height:1.3;}
 .c37-sub{font-size:clamp(12px,1.8cqw,16px);color:#64748b;margin-top:16px;letter-spacing:1px;}
+/* 右对齐镜像模式 */
+.c37-flip .c37-bg{right:auto;left:0;width:35%;clip-path:polygon(0 0,80% 0,100% 100%,0 100%);}
+.c37-flip .c37-line{left:auto;right:6%;}
+.c37-flip .c37-wrap{max-width:85%;padding-left:0;padding-right:8%;margin-left:auto;margin-right:0;}
+.c37-flip .c37-title,.c37-flip .c37-sub,.c37-flip .c37-tag{text-align:right;}
 
 /* ════════════ c38 · 晨雾光影 ════════════ */
 .c38{background:#f5f0ea;}
@@ -552,10 +557,10 @@
 .c48-sub{font-size:clamp(12px,1.8cqw,16px);color:#6b7280;margin-top:16px;letter-spacing:1px;}
 
 /* ════════════ c49 · 温润大地 ════════════ */
-.c49{background:#e7e5e4;flex-direction:row;align-items:stretch;}
+.c49{background:#e7e5e4;flex-direction:row;align-items:center;}
 .c49-left{flex:0 0 12%;background:#d6d3d1;display:flex;align-items:center;justify-content:center;}
 .c49-left span{color:#78716c;font-family:'Roboto Mono',monospace;font-size:12px;letter-spacing:4px;}
-.c49-right{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 15%;text-align:left;}
+.c49-right{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 15%;text-align:center;}
 .c49-title{font-family:'Noto Sans SC',sans-serif;font-weight:700;font-size:clamp(24px,6cqw,56px);color:#292524;line-height:1.3;}
 .c49-sub{font-size:clamp(12px,1.8cqw,16px);color:#57534e;margin-top:16px;}
 

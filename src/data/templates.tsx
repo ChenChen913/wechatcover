@@ -123,9 +123,20 @@ export const TEMPLATES: TemplateData[] = [
   )},
 
   // ═══════════ 第三组：商务/现代/艺术 (t37-t52) ═══════════
-  { id: 't37', name: '商务蓝调', cat: 'corporate tech', desc: '专业沉稳 · 蓝调', render: (cfg: CoverConfig) => (
-    <div className="c c37"><div className="c37-bg" /><div className="c37-line" /><div className="c37-wrap" style={getTextLayoutStyle(cfg)}>{cfg.tag.visible && <div className="c37-tag" style={getTagStyle(cfg)}>{getTagText(cfg)}</div>}{cfg.mainTitle.visible && <div style={getMainTitleContainerStyle(cfg)}><div className="c37-title" style={{...getTitleStyle(cfg), ...getMultilineTextStyle()}}>{cfg.mainTitle.content || '请输入文章标题'}</div></div>}{cfg.subtitle.visible && <div className="c37-sub" style={{...getSubtitleStyle(cfg), ...getMultilineTextStyle()}}>{cfg.subtitle.content || '副标题文字'}</div>}</div></div>
-  )},
+  { id: 't37', name: '商务蓝调', cat: 'corporate tech', desc: '专业沉稳 · 蓝调', render: (cfg: CoverConfig) => {
+    const isRightAlign = cfg.textBlock.hAlign === 'right';
+    return (
+      <div className={`c c37${isRightAlign ? ' c37-flip' : ''}`}>
+        <div className="c37-bg" />
+        <div className="c37-line" />
+        <div className="c37-wrap" style={getTextLayoutStyle(cfg)}>
+          {cfg.tag.visible && <div className="c37-tag" style={getTagStyle(cfg)}>{getTagText(cfg)}</div>}
+          {cfg.mainTitle.visible && <div style={getMainTitleContainerStyle(cfg)}><div className="c37-title" style={{...getTitleStyle(cfg), ...getMultilineTextStyle()}}>{cfg.mainTitle.content || '请输入文章标题'}</div></div>}
+          {cfg.subtitle.visible && <div className="c37-sub" style={{...getSubtitleStyle(cfg), ...getMultilineTextStyle()}}>{cfg.subtitle.content || '副标题文字'}</div>}
+        </div>
+      </div>
+    );
+  }},
   { id: 't38', name: '晨雾光影', cat: 'art light', desc: '人文关怀 · 暖色', render: (cfg: CoverConfig) => (
     <div className="c c38"><div className="c38-light" /><div className="c38-wrap" style={getTextLayoutStyle(cfg)}>{cfg.mainTitle.visible && <div style={getMainTitleContainerStyle(cfg)}><div className="c38-title" style={{...getTitleStyle(cfg), ...getMultilineTextStyle()}}>{cfg.mainTitle.content || '请输入文章标题'}</div></div>}{cfg.subtitle.visible && <div className="c38-sub" style={{...getSubtitleStyle(cfg), ...getMultilineTextStyle()}}>{cfg.subtitle.content || '副标题文字'}</div>}</div></div>
   )},
