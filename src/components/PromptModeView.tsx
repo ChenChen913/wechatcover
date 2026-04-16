@@ -11,12 +11,12 @@ interface PromptModeProps {
 
 export const PromptModeView: React.FC<PromptModeProps> = ({ title, subtitle }) => {
   const [selectedCategory, setSelectedCategory] = useState('全部');
-  const [copiedId, setCopiedId] = useState<{ id: string; type: 'prompt' | 'negative' } | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
 
-  const handleCopy = useCallback(async (text: string, id: string, type: 'prompt' | 'negative') => {
+  const handleCopy = useCallback(async (text: string, id: string) => {
     await navigator.clipboard.writeText(text);
-    setCopiedId({ id, type });
+    setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
   }, []);
 
@@ -118,28 +118,16 @@ export const PromptModeView: React.FC<PromptModeProps> = ({ title, subtitle }) =
                   {isExpanded ? '收起' : '展开'}
                 </button>
                 <button
-                  onClick={() => handleCopy(fullPrompt, prompt.id, 'prompt')}
+                  onClick={() => handleCopy(fullPrompt, prompt.id)}
                   className={`
                     text-[11px] px-3 py-1.5 rounded-md transition-all
-                    ${copiedId?.id === prompt.id && copiedId?.type === 'prompt'
+                    ${copiedId === prompt.id
                       ? 'bg-[#22c55e] text-white'
                       : 'bg-transparent border border-white/13 text-[#7070a0] hover:border-[#7c6df0] hover:text-[#c084fc]'
                     }
                   `}
                 >
-                  {copiedId?.id === prompt.id && copiedId?.type === 'prompt' ? '✓ 已复制' : '复制提示词'}
-                </button>
-                <button
-                  onClick={() => handleCopy(prompt.negativePrompt, prompt.id, 'negative')}
-                  className={`
-                    text-[11px] px-3 py-1.5 rounded-md transition-all
-                    ${copiedId?.id === prompt.id && copiedId?.type === 'negative'
-                      ? 'bg-[#22c55e] text-white'
-                      : 'bg-transparent border border-white/13 text-[#7070a0] hover:border-[#7c6df0] hover:text-[#c084fc]'
-                    }
-                  `}
-                >
-                  {copiedId?.id === prompt.id && copiedId?.type === 'negative' ? '✓ 已复制' : '负向提示词'}
+                  {copiedId === prompt.id ? '✓ 已复制' : '复制提示词'}
                 </button>
               </div>
             </div>
