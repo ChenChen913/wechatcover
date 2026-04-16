@@ -47,6 +47,10 @@ export const ControlPanel: React.FC = () => {
   
   const { mainTitle, subtitle, tag, textBlock, primaryColor } = config;
 
+  // 获取当前模板的覆盖配置
+  const currentTemplateOverrides = useCoverStore((state) => state.templateOverrides[config.templateId]);
+  const resetCurrentTemplateOverrides = useCoverStore((state) => state.resetCurrentTemplateOverrides);
+
   // 模板名称查找表
   const templateNameMap: Record<string, { name: string; desc: string }> = {
     t01: { name: '极简留白', desc: '杂志排版 · 高级灰' }, t02: { name: '深空星云', desc: '弥散光晕 · 科技感' },
@@ -631,7 +635,12 @@ export const ControlPanel: React.FC = () => {
   );
 
   // Tab 3: 布局排版
-  const LayoutTab = () => (
+  const LayoutTab = () => {
+    // 检查当前模板是否有覆盖配置
+    const hasTextBlockOverrides = currentTemplateOverrides?.textBlock !== undefined;
+    const hasPrimaryColorOverride = currentTemplateOverrides?.primaryColor !== undefined;
+
+    return (
     <div className="space-y-6">
       {/* 水平位置 */}
       <Card>
@@ -731,8 +740,22 @@ export const ControlPanel: React.FC = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* 重置按钮 */}
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={resetCurrentTemplateOverrides}
+        disabled={!hasTextBlockOverrides && !hasPrimaryColorOverride}
+        className="w-full"
+      >
+        {(hasTextBlockOverrides || hasPrimaryColorOverride)
+          ? '重置当前模板布局'
+          : '当前模板已使用默认布局'}
+      </Button>
     </div>
-  );
+    );
+  };
 
   // Tab 4: 模板主题（色调修改）
   const TemplateTab = () => {
@@ -743,13 +766,15 @@ export const ControlPanel: React.FC = () => {
 
     const templateId = config.templateId;
     const templateSetting = TEMPLATE_TEXT_SETTINGS[templateId];
-    const userValue = useCoverStore((state) => state.userTemplateSettings[templateId]);
-    const setUserTemplateSetting = useCoverStore((state) => state.setUserTemplateSetting);
-    const resetUserTemplateSetting = useCoverStore((state) => state.resetUserTemplateSetting);
+
+    // 从 templateOverrides 读取当前模板的用户设置
+    const overrides = currentTemplateOverrides;
+    const userMaxCharsMain = overrides?.mainTitle?.maxCharsPerLine;
+    const userMaxCharsSub = overrides?.subtitle?.maxCharsPerLine;
 
     // 当前有效值：用户值 > 默认值
-    const currentValue = userValue ?? templateSetting?.defaultMaxCharsPerLine ?? DEFAULT_MAX_CHARS_PER_LINE;
-    const hasUserValue = userValue !== undefined;
+    const currentMaxCharsMain = userMaxCharsMain ?? templateSetting?.defaultMaxCharsPerLine ?? DEFAULT_MAX_CHARS_PER_LINE;
+    const hasUserMaxChars = userMaxCharsMain !== undefined;
 
     return (
       <div className="space-y-6">
@@ -778,11 +803,11 @@ export const ControlPanel: React.FC = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <label className="text-xs text-muted-foreground">每行最大字数</label>
-                <span className="text-xs font-medium">{currentValue} 字</span>
+                <span className="text-xs font-medium">{currentMaxCharsMain} 字</span>
               </div>
               <Slider
-                value={[currentValue]}
-                onValueChange={(v) => setUserTemplateSetting(templateId, Array.isArray(v) ? v[0] : v)}
+                value={[currentMaxCharsMain]}
+                onValueChange={(v) => setMainTitle({ maxCharsPerLine: Array.isArray(v) ? v[0] : v })}
                 min={templateSetting?.minMaxCharsPerLine || 4}
                 max={templateSetting?.maxMaxCharsPerLine || 20}
                 step={1}
@@ -799,11 +824,11 @@ export const ControlPanel: React.FC = () => {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => resetUserTemplateSetting(templateId)}
-              disabled={!hasUserValue}
+              onClick={resetCurrentTemplateOverrides}
+              disabled={!hasUserMaxChars}
               className="w-full"
             >
-              {hasUserValue ? `重置为默认值 (${templateSetting?.defaultMaxCharsPerLine || DEFAULT_MAX_CHARS_PER_LINE})` : '已使用默认值'}
+              {hasUserMaxChars ? `重置为默认值 (${templateSetting?.defaultMaxCharsPerLine || DEFAULT_MAX_CHARS_PER_LINE})` : '已使用默认值'}
             </Button>
           </CardContent>
         </Card>
