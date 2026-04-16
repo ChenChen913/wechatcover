@@ -152,7 +152,7 @@ function getTemplateDefaultOverrides(templateId: string): TemplateOverrides {
       maxCharsPerLine: setting?.defaultMaxCharsPerLine ?? DEFAULT_MAX_CHARS_PER_LINE,
     },
     subtitle: {
-      maxCharsPerLine: 12,  // 副标题默认值
+      maxCharsPerLine: 14,  // 副标题默认每行字数
     },
   };
 }
@@ -266,6 +266,12 @@ export const useCoverStore = create<CoverStore>()(
       state.config.mainTitle = { ...defaultConfig.mainTitle };
       state.config.subtitle = { ...defaultConfig.subtitle };
       state.config.primaryColor = defaultConfig.primaryColor;
+
+      // 如果目标模板没有 overrides，创建默认的
+      if (!state.templateOverrides[id]) {
+        const defaultOverrides = getTemplateDefaultOverrides(id);
+        state.templateOverrides[id] = defaultOverrides;
+      }
 
       // 应用该模板的覆盖配置（如果有）
       applyOverrides(state, id);

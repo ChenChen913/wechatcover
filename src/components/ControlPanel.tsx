@@ -771,10 +771,12 @@ export const ControlPanel: React.FC = () => {
     const overrides = currentTemplateOverrides;
     const userMaxCharsMain = overrides?.mainTitle?.maxCharsPerLine;
     const userMaxCharsSub = overrides?.subtitle?.maxCharsPerLine;
+    const hasUserMaxCharsMain = userMaxCharsMain !== undefined;
+    const hasUserMaxCharsSub = userMaxCharsSub !== undefined;
 
     // 当前有效值：用户值 > 默认值
     const currentMaxCharsMain = userMaxCharsMain ?? templateSetting?.defaultMaxCharsPerLine ?? DEFAULT_MAX_CHARS_PER_LINE;
-    const hasUserMaxChars = userMaxCharsMain !== undefined;
+    const currentMaxCharsSub = userMaxCharsSub ?? 14;  // 副标题默认值
 
     return (
       <div className="space-y-6">
@@ -800,9 +802,10 @@ export const ControlPanel: React.FC = () => {
           <CardContent className="pt-4 space-y-4">
             <h4 className="text-sm font-medium">文字排版</h4>
 
+            {/* 主标题每行最大字数 */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-xs text-muted-foreground">每行最大字数</label>
+                <label className="text-xs text-muted-foreground">主标题每行最大字数</label>
                 <span className="text-xs font-medium">{currentMaxCharsMain} 字</span>
               </div>
               <Slider
@@ -821,15 +824,50 @@ export const ControlPanel: React.FC = () => {
               </p>
             </div>
 
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={resetCurrentTemplateOverrides}
-              disabled={!hasUserMaxChars}
-              className="w-full"
-            >
-              {hasUserMaxChars ? `重置为默认值 (${templateSetting?.defaultMaxCharsPerLine || DEFAULT_MAX_CHARS_PER_LINE})` : '已使用默认值'}
-            </Button>
+            {/* 副标题每行最大字数 */}
+            <div className="space-y-2 pt-2 border-t border-border">
+              <div className="flex items-center justify-between">
+                <label className="text-xs text-muted-foreground">副标题每行最大字数</label>
+                <span className="text-xs font-medium">{currentMaxCharsSub} 字</span>
+              </div>
+              <Slider
+                value={[currentMaxCharsSub]}
+                onValueChange={(v) => setSubtitle({ maxCharsPerLine: Array.isArray(v) ? v[0] : v })}
+                min={6}
+                max={24}
+                step={1}
+              />
+              <div className="flex justify-between text-[10px] text-muted-foreground">
+                <span>紧凑（多行）</span>
+                <span>宽松（少行）</span>
+              </div>
+            </div>
+
+            {/* 重置按钮 */}
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setMainTitle({ maxCharsPerLine: templateSetting?.defaultMaxCharsPerLine ?? DEFAULT_MAX_CHARS_PER_LINE });
+                }}
+                disabled={!hasUserMaxCharsMain}
+                className="flex-1"
+              >
+                {hasUserMaxCharsMain ? '重置主标题' : '主标题已默认'}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setSubtitle({ maxCharsPerLine: 14 });
+                }}
+                disabled={!hasUserMaxCharsSub}
+                className="flex-1"
+              >
+                {hasUserMaxCharsSub ? '重置副标题' : '副标题已默认'}
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
