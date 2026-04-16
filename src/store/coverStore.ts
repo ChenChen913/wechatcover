@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { TEMPLATE_TEXT_SETTINGS, DEFAULT_MAX_CHARS_PER_LINE } from '@/data/templateSettings';
 
 export interface TextLayerConfig {
   content: string;
@@ -17,7 +16,6 @@ export interface TextLayerConfig {
   useGradient: boolean;
   gradientFrom: string;
   gradientTo: string;
-  maxCharsPerLine: number;
 }
 
 export interface TagConfig {
@@ -54,12 +52,6 @@ export interface CoverConfig {
  */
 export interface TemplateOverrides {
   textBlock?: Partial<TextBlockConfig>;
-  mainTitle?: {
-    maxCharsPerLine?: number;
-  };
-  subtitle?: {
-    maxCharsPerLine?: number;
-  };
   primaryColor?: string;
 }
 
@@ -80,7 +72,6 @@ export function defaultCoverConfig(): CoverConfig {
       useGradient: false,
       gradientFrom: '#7c6df0',
       gradientTo: '#ec4899',
-      maxCharsPerLine: 10,
     },
     subtitle: {
       content: '深度解析 · 独家视角',
@@ -97,7 +88,6 @@ export function defaultCoverConfig(): CoverConfig {
       useGradient: false,
       gradientFrom: '#7c6df0',
       gradientTo: '#ec4899',
-      maxCharsPerLine: 12,
     },
     tag: {
       visible: true,
@@ -143,21 +133,6 @@ interface CoverStore {
 }
 
 /**
- * 获取模板的默认配置（从 TEMPLATE_TEXT_SETTINGS）
- */
-function getTemplateDefaultOverrides(templateId: string): TemplateOverrides {
-  const setting = TEMPLATE_TEXT_SETTINGS[templateId];
-  return {
-    mainTitle: {
-      maxCharsPerLine: setting?.defaultMaxCharsPerLine ?? DEFAULT_MAX_CHARS_PER_LINE,
-    },
-    subtitle: {
-      maxCharsPerLine: 14,  // 副标题默认每行字数
-    },
-  };
-}
-
-/**
  * 应用模板覆盖配置到 config
  */
 function applyOverrides(state: { config: CoverConfig; templateOverrides: Record<string, TemplateOverrides> }, templateId: string) {
@@ -165,14 +140,6 @@ function applyOverrides(state: { config: CoverConfig; templateOverrides: Record<
 
   if (overrides?.textBlock) {
     Object.assign(state.config.textBlock, overrides.textBlock);
-  }
-
-  if (overrides?.mainTitle?.maxCharsPerLine !== undefined) {
-    state.config.mainTitle.maxCharsPerLine = overrides.mainTitle.maxCharsPerLine;
-  }
-
-  if (overrides?.subtitle?.maxCharsPerLine !== undefined) {
-    state.config.subtitle.maxCharsPerLine = overrides.subtitle.maxCharsPerLine;
   }
 
   if (overrides?.primaryColor !== undefined) {
@@ -197,37 +164,11 @@ export const useCoverStore = create<CoverStore>()(
     }),
 
     setMainTitle: (patch) => set((state) => {
-      // 更新当前 config
       Object.assign(state.config.mainTitle, patch);
-
-      // 如果修改了 maxCharsPerLine，同步到当前模板的 overrides
-      if (patch.maxCharsPerLine !== undefined) {
-        const templateId = state.config.templateId;
-        if (!state.templateOverrides[templateId]) {
-          state.templateOverrides[templateId] = {};
-        }
-        if (!state.templateOverrides[templateId].mainTitle) {
-          state.templateOverrides[templateId].mainTitle = {};
-        }
-        state.templateOverrides[templateId].mainTitle.maxCharsPerLine = patch.maxCharsPerLine;
-      }
     }),
 
     setSubtitle: (patch) => set((state) => {
-      // 更新当前 config
       Object.assign(state.config.subtitle, patch);
-
-      // 如果修改了 maxCharsPerLine，同步到当前模板的 overrides
-      if (patch.maxCharsPerLine !== undefined) {
-        const templateId = state.config.templateId;
-        if (!state.templateOverrides[templateId]) {
-          state.templateOverrides[templateId] = {};
-        }
-        if (!state.templateOverrides[templateId].subtitle) {
-          state.templateOverrides[templateId].subtitle = {};
-        }
-        state.templateOverrides[templateId].subtitle.maxCharsPerLine = patch.maxCharsPerLine;
-      }
     }),
 
     setTag: (patch) => set((state) => {
@@ -254,8 +195,8 @@ export const useCoverStore = create<CoverStore>()(
 
     /**
      * 切换模板时：
-     * 1. 保存当前 config 的状态（隐式，因为已经保存到 overrides）
-     * 2. 加载目标模板的配置
+     * 1. 重置为默认配置
+     * 2. 应用该模板的覆盖配置（如果有）
      */
     setTemplate: (id) => set((state) => {
       state.config.templateId = id;
@@ -266,12 +207,6 @@ export const useCoverStore = create<CoverStore>()(
       state.config.mainTitle = { ...defaultConfig.mainTitle };
       state.config.subtitle = { ...defaultConfig.subtitle };
       state.config.primaryColor = defaultConfig.primaryColor;
-
-      // 如果目标模板没有 overrides，创建默认的
-      if (!state.templateOverrides[id]) {
-        const defaultOverrides = getTemplateDefaultOverrides(id);
-        state.templateOverrides[id] = defaultOverrides;
-      }
 
       // 应用该模板的覆盖配置（如果有）
       applyOverrides(state, id);
@@ -312,11 +247,6 @@ export const useCoverStore = create<CoverStore>()(
       state.config.mainTitle = { ...defaultConfig.mainTitle };
       state.config.subtitle = { ...defaultConfig.subtitle };
       state.config.primaryColor = defaultConfig.primaryColor;
-
-      // 应用模板默认覆盖值
-      const defaultOverrides = getTemplateDefaultOverrides(templateId);
-      state.templateOverrides[templateId] = defaultOverrides;
-      applyOverrides(state, templateId);
     }),
   }))
 );

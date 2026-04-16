@@ -2,18 +2,6 @@ import React from 'react';
 import type { CoverConfig, TextLayerConfig } from '@/store/coverStore';
 
 /**
- * 按固定字数切分文本为多行
- */
-export function splitTextByChars(text: string, maxChars: number): string[] {
-  if (!text || maxChars <= 0) return [];
-  const lines: string[] = [];
-  for (let i = 0; i < text.length; i += maxChars) {
-    lines.push(text.slice(i, i + maxChars));
-  }
-  return lines;
-}
-
-/**
  * 生成文字图层 inline style（主标题/副标题通用）
  */
 function getTextLayerStyle(
@@ -30,9 +18,12 @@ function getTextLayerStyle(
   style.lineHeight = layer.lineHeight;
   if (layer.color) style.color = layer.color;
 
+  // 文字自动换行：使用 keep-all 尽量不在汉字中间断开
+  style.wordBreak = 'keep-all';
+  style.overflowWrap = 'break-word';
+
   if (layer.maxWidth < 100) {
     style.maxWidth = `${layer.maxWidth}%`;
-    style.wordBreak = 'break-word';
   }
 
   style.textAlign = hAlign;
@@ -67,12 +58,13 @@ export function getSubtitleStyle(config: CoverConfig): React.CSSProperties {
 
 /**
  * 生成多行文本容器的 inline style
+ * 用于主标题和副标题的文本容器
  */
 export function getMultilineTextStyle(): React.CSSProperties {
   return {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.15em',
+    display: 'block',
+    wordBreak: 'keep-all',
+    overflowWrap: 'break-word',
   };
 }
 

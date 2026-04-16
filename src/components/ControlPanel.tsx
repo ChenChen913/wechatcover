@@ -9,7 +9,6 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
-import { TEMPLATE_TEXT_SETTINGS, DEFAULT_MAX_CHARS_PER_LINE } from '@/data/templateSettings';
 
 const fontOptions = [
   { value: 'var(--font-noto-sans)', label: 'Noto Sans SC (思源黑体)' },
@@ -46,10 +45,6 @@ export const ControlPanel: React.FC = () => {
   const setActiveControlTab = useCoverStore((state) => state.setActiveControlTab);
   
   const { mainTitle, subtitle, tag, textBlock, primaryColor } = config;
-
-  // 获取当前模板的覆盖配置
-  const currentTemplateOverrides = useCoverStore((state) => state.templateOverrides[config.templateId]);
-  const resetCurrentTemplateOverrides = useCoverStore((state) => state.resetCurrentTemplateOverrides);
 
   // 模板名称查找表
   const templateNameMap: Record<string, { name: string; desc: string }> = {
@@ -108,25 +103,6 @@ export const ControlPanel: React.FC = () => {
           <div className="text-xs text-muted-foreground text-right">
             {mainTitle.content.length} / 24
           </div>
-
-          {/* 每行最大字数 */}
-          <div className="space-y-2 pt-2 border-t border-border">
-            <div className="flex items-center justify-between">
-              <label className="text-xs text-muted-foreground">每行最大字数</label>
-              <span className="text-xs text-muted-foreground">{mainTitle.maxCharsPerLine} 字</span>
-            </div>
-            <Slider
-              value={[mainTitle.maxCharsPerLine]}
-              onValueChange={(v) => setMainTitle({ maxCharsPerLine: Array.isArray(v) ? v[0] : v })}
-              min={4}
-              max={16}
-              step={1}
-            />
-            <div className="flex justify-between text-[10px] text-muted-foreground">
-              <span>紧凑（多行）</span>
-              <span>宽松（少行）</span>
-            </div>
-          </div>
         </CardContent>
       </Card>
 
@@ -151,25 +127,6 @@ export const ControlPanel: React.FC = () => {
           />
           <div className="text-xs text-muted-foreground text-right">
             {subtitle.content.length} / 36
-          </div>
-
-          {/* 每行最大字数 */}
-          <div className="space-y-2 pt-2 border-t border-border">
-            <div className="flex items-center justify-between">
-              <label className="text-xs text-muted-foreground">每行最大字数</label>
-              <span className="text-xs text-muted-foreground">{subtitle.maxCharsPerLine} 字</span>
-            </div>
-            <Slider
-              value={[subtitle.maxCharsPerLine]}
-              onValueChange={(v) => setSubtitle({ maxCharsPerLine: Array.isArray(v) ? v[0] : v })}
-              min={6}
-              max={24}
-              step={1}
-            />
-            <div className="flex justify-between text-[10px] text-muted-foreground">
-              <span>紧凑（多行）</span>
-              <span>宽松（少行）</span>
-            </div>
           </div>
         </CardContent>
       </Card>
@@ -635,12 +592,7 @@ export const ControlPanel: React.FC = () => {
   );
 
   // Tab 3: 布局排版
-  const LayoutTab = () => {
-    // 检查当前模板是否有覆盖配置
-    const hasTextBlockOverrides = currentTemplateOverrides?.textBlock !== undefined;
-    const hasPrimaryColorOverride = currentTemplateOverrides?.primaryColor !== undefined;
-
-    return (
+  const LayoutTab = () => (
     <div className="space-y-6">
       {/* 水平位置 */}
       <Card>
@@ -740,22 +692,8 @@ export const ControlPanel: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-
-      {/* 重置按钮 */}
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={resetCurrentTemplateOverrides}
-        disabled={!hasTextBlockOverrides && !hasPrimaryColorOverride}
-        className="w-full"
-      >
-        {(hasTextBlockOverrides || hasPrimaryColorOverride)
-          ? '重置当前模板布局'
-          : '当前模板已使用默认布局'}
-      </Button>
     </div>
-    );
-  };
+  );
 
   // Tab 4: 模板主题（色调修改）
   const TemplateTab = () => {
@@ -765,18 +703,6 @@ export const ControlPanel: React.FC = () => {
     ];
 
     const templateId = config.templateId;
-    const templateSetting = TEMPLATE_TEXT_SETTINGS[templateId];
-
-    // 从 templateOverrides 读取当前模板的用户设置
-    const overrides = currentTemplateOverrides;
-    const userMaxCharsMain = overrides?.mainTitle?.maxCharsPerLine;
-    const userMaxCharsSub = overrides?.subtitle?.maxCharsPerLine;
-    const hasUserMaxCharsMain = userMaxCharsMain !== undefined;
-    const hasUserMaxCharsSub = userMaxCharsSub !== undefined;
-
-    // 当前有效值：用户值 > 默认值
-    const currentMaxCharsMain = userMaxCharsMain ?? templateSetting?.defaultMaxCharsPerLine ?? DEFAULT_MAX_CHARS_PER_LINE;
-    const currentMaxCharsSub = userMaxCharsSub ?? 14;  // 副标题默认值
 
     return (
       <div className="space-y-6">
@@ -794,80 +720,6 @@ export const ControlPanel: React.FC = () => {
               </div>
             </div>
             <p className="text-xs text-muted-foreground">如需切换模板，请在右侧封面卡片上点击"选择"按钮</p>
-          </CardContent>
-        </Card>
-
-        {/* 每行最大字数 */}
-        <Card>
-          <CardContent className="pt-4 space-y-4">
-            <h4 className="text-sm font-medium">文字排版</h4>
-
-            {/* 主标题每行最大字数 */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <label className="text-xs text-muted-foreground">主标题每行最大字数</label>
-                <span className="text-xs font-medium">{currentMaxCharsMain} 字</span>
-              </div>
-              <Slider
-                value={[currentMaxCharsMain]}
-                onValueChange={(v) => setMainTitle({ maxCharsPerLine: Array.isArray(v) ? v[0] : v })}
-                min={templateSetting?.minMaxCharsPerLine || 4}
-                max={templateSetting?.maxMaxCharsPerLine || 20}
-                step={1}
-              />
-              <div className="flex justify-between text-[10px] text-muted-foreground">
-                <span>紧凑（多行）</span>
-                <span>宽松（少行）</span>
-              </div>
-              <p className="text-[10px] text-muted-foreground">
-                当前模板默认值：{templateSetting?.defaultMaxCharsPerLine || DEFAULT_MAX_CHARS_PER_LINE} 字
-              </p>
-            </div>
-
-            {/* 副标题每行最大字数 */}
-            <div className="space-y-2 pt-2 border-t border-border">
-              <div className="flex items-center justify-between">
-                <label className="text-xs text-muted-foreground">副标题每行最大字数</label>
-                <span className="text-xs font-medium">{currentMaxCharsSub} 字</span>
-              </div>
-              <Slider
-                value={[currentMaxCharsSub]}
-                onValueChange={(v) => setSubtitle({ maxCharsPerLine: Array.isArray(v) ? v[0] : v })}
-                min={6}
-                max={24}
-                step={1}
-              />
-              <div className="flex justify-between text-[10px] text-muted-foreground">
-                <span>紧凑（多行）</span>
-                <span>宽松（少行）</span>
-              </div>
-            </div>
-
-            {/* 重置按钮 */}
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  setMainTitle({ maxCharsPerLine: templateSetting?.defaultMaxCharsPerLine ?? DEFAULT_MAX_CHARS_PER_LINE });
-                }}
-                disabled={!hasUserMaxCharsMain}
-                className="flex-1"
-              >
-                {hasUserMaxCharsMain ? '重置主标题' : '主标题已默认'}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  setSubtitle({ maxCharsPerLine: 14 });
-                }}
-                disabled={!hasUserMaxCharsSub}
-                className="flex-1"
-              >
-                {hasUserMaxCharsSub ? '重置副标题' : '副标题已默认'}
-              </Button>
-            </div>
           </CardContent>
         </Card>
 
