@@ -33,8 +33,6 @@ export interface TagConfig {
 export interface TextBlockConfig {
   hAlign: 'left' | 'center' | 'right';
   widthPercent: number;
-  paddingLeft: number;
-  paddingRight: number;
   vAlign: 'top' | 'middle' | 'bottom';
   paddingTop: number;
   paddingBottom: number;
@@ -98,8 +96,6 @@ export function defaultCoverConfig(): CoverConfig {
     textBlock: {
       hAlign: 'left',
       widthPercent: 55,
-      paddingLeft: 7,
-      paddingRight: 5,
       vAlign: 'middle',
       paddingTop: 10,
       paddingBottom: 10,

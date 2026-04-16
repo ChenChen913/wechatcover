@@ -673,35 +673,7 @@ export const ControlPanel: React.FC = () => {
               max={90}
               step={1}
             />
-          </div>
-
-          {/* 左右边距 */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <label className="text-xs text-muted-foreground">左边距</label>
-              <span className="text-xs text-muted-foreground">{textBlock.paddingLeft}%</span>
-            </div>
-            <Slider
-              value={[textBlock.paddingLeft]}
-              onValueChange={(v) => setTextBlock({ paddingLeft: Array.isArray(v) ? v[0] : v })}
-              min={0}
-              max={15}
-              step={1}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <label className="text-xs text-muted-foreground">右边距</label>
-              <span className="text-xs text-muted-foreground">{textBlock.paddingRight}%</span>
-            </div>
-            <Slider
-              value={[textBlock.paddingRight]}
-              onValueChange={(v) => setTextBlock({ paddingRight: Array.isArray(v) ? v[0] : v })}
-              min={0}
-              max={15}
-              step={1}
-            />
+            <p className="text-[10px] text-muted-foreground">宽度越小，左右留白越多</p>
           </div>
         </CardContent>
       </Card>
