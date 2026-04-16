@@ -97,6 +97,7 @@ export function getTagText(config: CoverConfig): string {
 
 /**
  * 生成文字区域容器 style（布局用）
+ * 用于 tag、subtitle 等不受宽度控制的元素
  */
 export function getTextLayoutStyle(config: CoverConfig): React.CSSProperties {
   const { textBlock } = config;
@@ -104,8 +105,6 @@ export function getTextLayoutStyle(config: CoverConfig): React.CSSProperties {
     display: 'flex',
     flexDirection: 'column',
   };
-
-  style.width = `${textBlock.widthPercent}%`;
 
   switch (textBlock.hAlign) {
     case 'left':
@@ -135,6 +134,33 @@ export function getTextLayoutStyle(config: CoverConfig): React.CSSProperties {
     case 'bottom':
       style.justifyContent = 'flex-end';
       style.paddingBottom = `${textBlock.paddingBottom}%`;
+      break;
+  }
+
+  return style;
+}
+
+/**
+ * 生成主标题容器 style（带宽度控制）
+ * 只用于主标题，控制其最大宽度以实现自动换行
+ */
+export function getMainTitleContainerStyle(config: CoverConfig): React.CSSProperties {
+  const { textBlock } = config;
+  const style: React.CSSProperties = {
+    width: `${textBlock.widthPercent}%`,
+  };
+
+  // 根据水平对齐方式设置 margin
+  switch (textBlock.hAlign) {
+    case 'left':
+      style.marginRight = 'auto';
+      break;
+    case 'center':
+      style.marginLeft = 'auto';
+      style.marginRight = 'auto';
+      break;
+    case 'right':
+      style.marginLeft = 'auto';
       break;
   }
 
