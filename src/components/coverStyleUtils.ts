@@ -104,6 +104,7 @@ export function getTextLayoutStyle(config: CoverConfig): React.CSSProperties {
   const style: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
   };
 
   switch (textBlock.hAlign) {
