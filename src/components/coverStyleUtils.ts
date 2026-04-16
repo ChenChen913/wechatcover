@@ -96,25 +96,22 @@ export function getTextLayoutStyle(config: CoverConfig): React.CSSProperties {
     case 'left':
       style.alignItems = 'flex-start';
       style.textAlign = 'left';
-      style.marginLeft = '0';
+      style.paddingLeft = `${textBlock.paddingLeft}%`;
       style.marginRight = 'auto';
       break;
     case 'center':
       style.alignItems = 'center';
       style.textAlign = 'center';
-      style.marginLeft = 'auto';
-      style.marginRight = 'auto';
+      style.paddingLeft = `${textBlock.paddingLeft}%`;
+      style.paddingRight = `${textBlock.paddingRight}%`;
       break;
     case 'right':
       style.alignItems = 'flex-end';
       style.textAlign = 'right';
+      style.paddingRight = `${textBlock.paddingRight}%`;
       style.marginLeft = 'auto';
-      style.marginRight = '0';
       break;
   }
-
-  style.paddingLeft = '0';
-  style.paddingRight = '0';
 
   switch (textBlock.vAlign) {
     case 'top':
