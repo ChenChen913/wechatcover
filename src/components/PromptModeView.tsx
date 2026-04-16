@@ -2,6 +2,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { promptTemplates, promptCategories } from '@/data/prompts';
+import { renderSimpleMarkdown } from '@/utils/markdownRenderer';
 
 interface PromptModeProps {
   title: string;
@@ -85,10 +86,12 @@ export const PromptModeView: React.FC<PromptModeProps> = ({ title, subtitle }) =
                 )}
               </div>
 
-              {/* 提示词内容 */}
+              {/* 提示词内容 - 渲染 markdown 格式 */}
               <div className="flex-1">
-                <div className={`text-sm text-[#d4d4e8] leading-relaxed ${isExpanded ? '' : 'line-clamp-4'}`}>
-                  {prompt.prompt}
+                <div className={`text-sm leading-relaxed ${isExpanded ? '' : 'line-clamp-4'}`}>
+                  <div className="text-[#d4d4e8]">
+                    {renderSimpleMarkdown(prompt.prompt)}
+                  </div>
                 </div>
                 {isExpanded && (
                   <>
@@ -98,7 +101,7 @@ export const PromptModeView: React.FC<PromptModeProps> = ({ title, subtitle }) =
                     </div>
                     <div className="mt-3 pt-3 border-t border-white/7">
                       <div className="text-[11px] text-[#7070a0] mb-1">完整提示词（已填充标题）：</div>
-                      <div className="text-sm text-[#d4d4e8] font-mono bg-black/20 p-3 rounded-lg break-all">
+                      <div className="text-sm text-[#d4d4e8] bg-black/20 p-3 rounded-lg break-all whitespace-pre-wrap font-mono">
                         {fullPrompt}
                       </div>
                     </div>
