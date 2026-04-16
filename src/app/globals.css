@@ -240,7 +240,7 @@
 .c10-content{position:relative;z-index:1;text-align:center;padding:0 8%;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;}
 .c10-tag{font-family:'Noto Serif SC',serif;font-size:clamp(9px,1.5cqw,14px);color:#d4af37;letter-spacing:6px;margin-bottom:4%;}
 .c10-title{font-family:'Noto Serif SC',serif;font-weight:700;font-size:clamp(24px,6.5cqw,60px);color:#fcf8e3;line-height:1.3;letter-spacing:4px;}
-.c10-line{width:2px;height:30px;background:#d4af37;margin:4% 0;}
+.c10-line{width:2px;height:30px;background:#d4af37;margin:2% 0;}
 .c10-sub{font-family:'Noto Serif SC',serif;font-size:clamp(10px,1.6cqw,15px);color:rgba(252,248,227,.8);letter-spacing:4px;}
 
 /* ════════════ c11 · 午夜奢华 ════════════ */
@@ -406,7 +406,7 @@
 .c29-sub{font-size:clamp(10px,1.8cqw,16px);color:#666;margin-top:20px;letter-spacing:5px;}
 
 /* ════════════ c30 · 包豪斯艺术 ════════════ */
-.c30{background:#f1f1f1;display:flex;align-items:center;justify-content:center;padding:0 25%;}
+.c30{background:#f1f1f1;display:flex;align-items:center;justify-content:center;padding:0 18%;}
 .c30-shapes{position:absolute;inset:0;overflow:hidden;}
 .c30-sq{position:absolute;width:45%;height:100%;background:#ff3e3e;left:0;top:0;}
 .c30-ci{position:absolute;width:30cqw;height:30cqw;background:#ffce00;border-radius:50%;left:35%;top:50%;transform:translate(-50%,-50%);}
@@ -463,7 +463,7 @@
 /* ════════════ c37 · 商务蓝调 ════════════ */
 .c37{background:#f8fafc;flex-direction:row;justify-content:flex-start;text-align:left;}
 .c37-bg{position:absolute;right:0;top:0;bottom:0;width:35%;background:linear-gradient(135deg,#1e3a8a,#3b82f6);clip-path:polygon(20% 0,100% 0,100% 100%,0 100%);}
-.c37-line{position:absolute;left:10%;top:15%;bottom:15%;width:3px;background:#3b82f6;}
+.c37-line{position:absolute;left:6%;top:15%;bottom:15%;width:3px;background:#3b82f6;}
 .c37-wrap{position:relative;z-index:10;max-width:85%;padding-left:8%;display:flex;flex-direction:column;justify-content:center;min-height:100%;}
 .c37-tag{font-family:'Roboto Mono',monospace;font-size:12px;color:#3b82f6;margin-bottom:12px;letter-spacing:2px;}
 .c37-title{font-family:'Noto Sans SC',sans-serif;font-weight:700;font-size:clamp(24px,6cqw,56px);color:#0f172a;line-height:1.3;}
@@ -501,7 +501,7 @@
 /* ════════════ c42 · 数据折线 ════════════ */
 .c42{background:#fcfcfc;}
 .c42-chart{position:absolute;bottom:10%;left:0;right:0;height:40%;border-bottom:2px solid #e2e8f0;background:linear-gradient(to top,rgba(59,130,246,.1),transparent);clip-path:polygon(0 100%,0 60%,20% 40%,40% 70%,60% 30%,80% 50%,100% 20%,100% 100%);}
-.c42-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:25% 10% 15%;text-align:center;}
+.c42-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:15% 10% 15%;text-align:center;}
 .c42-title{font-family:'Noto Sans SC',sans-serif;font-weight:900;font-size:clamp(26px,6.5cqw,60px);color:#0f172a;line-height:1.2;}
 .c42-sub{font-size:clamp(12px,1.8cqw,16px);color:#64748b;margin-top:12px;}
 
