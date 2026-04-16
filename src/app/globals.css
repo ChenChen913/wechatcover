@@ -279,7 +279,7 @@
 .c14-inner{position:relative;z-index:1;text-align:center;padding:0 2%;display:flex;flex-direction:column;align-items:center;}
 .c14-title{font-family:'Noto Serif SC',serif;font-weight:900;font-size:clamp(24px,6.5cqw,60px);color:#2b221b;line-height:1.2;letter-spacing:4px;}
 .c14-sub{font-family:'Noto Sans SC',sans-serif;font-size:clamp(10px,1.6cqw,14px);color:#5c4d42;margin-top:4%;letter-spacing:4px;}
-.c14-star{color:#b85c5c;font-size:20px;margin:2% 0;}
+.c14-star{color:#b85c5c;font-size:20px;margin:8px 0;}
 
 /* ════════════ c15 · 日出东方 ════════════ */
 .c15{background:#fff;display:flex;align-items:center;justify-content:center;}
@@ -406,7 +406,7 @@
 .c29-sub{font-size:clamp(10px,1.8cqw,16px);color:#666;margin-top:20px;letter-spacing:5px;}
 
 /* ════════════ c30 · 包豪斯艺术 ════════════ */
-.c30{background:#f1f1f1;display:flex;align-items:center;justify-content:flex-end;padding-right:10%;}
+.c30{background:#f1f1f1;display:flex;align-items:center;justify-content:flex-end;padding-right:15%;}
 .c30-shapes{position:absolute;inset:0;overflow:hidden;}
 .c30-sq{position:absolute;width:45%;height:100%;background:#ff3e3e;left:0;top:0;}
 .c30-ci{position:absolute;width:30cqw;height:30cqw;background:#ffce00;border-radius:50%;left:35%;top:50%;transform:translate(-50%,-50%);}
@@ -464,7 +464,7 @@
 .c37{background:#f8fafc;flex-direction:row;justify-content:flex-start;text-align:left;}
 .c37-bg{position:absolute;right:0;top:0;bottom:0;width:35%;background:linear-gradient(135deg,#1e3a8a,#3b82f6);clip-path:polygon(20% 0,100% 0,100% 100%,0 100%);}
 .c37-line{position:absolute;left:10%;top:20%;bottom:20%;width:3px;background:#3b82f6;}
-.c37-wrap{position:relative;z-index:10;max-width:85%;padding-left:8%;display:flex;flex-direction:column;justify-content:center;}
+.c37-wrap{position:relative;z-index:10;max-width:85%;padding-left:8%;display:flex;flex-direction:column;justify-content:center;min-height:100%;}
 .c37-tag{font-family:'Roboto Mono',monospace;font-size:12px;color:#3b82f6;margin-bottom:12px;letter-spacing:2px;}
 .c37-title{font-family:'Noto Sans SC',sans-serif;font-weight:700;font-size:clamp(24px,6cqw,56px);color:#0f172a;line-height:1.3;}
 .c37-sub{font-size:clamp(12px,1.8cqw,16px);color:#64748b;margin-top:16px;letter-spacing:1px;}
@@ -472,7 +472,7 @@
 /* ════════════ c38 · 晨雾光影 ════════════ */
 .c38{background:#f5f0ea;}
 .c38-light{position:absolute;width:60%;height:100%;top:0;right:0;background:radial-gradient(ellipse at center,rgba(217,192,163,.6),transparent 70%);filter:blur(40px);}
-.c38-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 15%;text-align:center;}
+.c38-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:0 15%;text-align:center;}
 .c38-title{font-family:'Noto Serif SC',serif;font-weight:700;font-size:clamp(26px,6.5cqw,60px);color:#4a3f35;line-height:1.3;letter-spacing:2px;}
 .c38-sub{font-family:'Noto Serif SC',serif;font-size:clamp(12px,1.8cqw,16px);color:#8c7e6c;margin-top:20px;letter-spacing:4px;}
 
@@ -486,7 +486,7 @@
 .c40{background:#0b132b;}
 .c40-grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.1) 1px,transparent 1px);background-size:20px 20px;}
 .c40-accent{position:absolute;bottom:0;left:20%;width:40%;height:4px;background:#00f5d4;}
-.c40-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 10%;text-align:center;}
+.c40-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:0 10%;text-align:center;}
 .c40-title{font-family:'Noto Sans SC',sans-serif;font-weight:700;font-size:clamp(24px,6cqw,56px);color:#fff;line-height:1.3;letter-spacing:1px;}
 .c40-sub{font-family:'Roboto Mono',monospace;font-size:clamp(11px,1.6cqw,15px);color:#00f5d4;margin-top:20px;letter-spacing:2px;}
 
@@ -494,14 +494,14 @@
 .c41{background:#1b2623;}
 .c41-border{position:absolute;inset:16px;border:1px solid rgba(212,175,55,.3);}
 .c41-border-inner{position:absolute;inset:24px;border:1px solid rgba(212,175,55,.15);}
-.c41-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 15%;text-align:center;}
+.c41-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:0 15%;text-align:center;}
 .c41-title{font-family:'Noto Serif SC',serif;font-weight:700;font-size:clamp(24px,6.5cqw,56px);color:#fcf8e3;line-height:1.3;letter-spacing:2px;}
 .c41-sub{font-family:'Playfair Display',serif;font-size:clamp(12px,1.8cqw,16px);color:#d4af37;margin-top:20px;letter-spacing:4px;}
 
 /* ════════════ c42 · 数据折线 ════════════ */
 .c42{background:#fcfcfc;}
 .c42-chart{position:absolute;bottom:10%;left:0;right:0;height:40%;border-bottom:2px solid #e2e8f0;background:linear-gradient(to top,rgba(59,130,246,.1),transparent);clip-path:polygon(0 100%,0 60%,20% 40%,40% 70%,60% 30%,80% 50%,100% 20%,100% 100%);}
-.c42-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 10% 10%;text-align:center;}
+.c42-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:0 10% 10%;text-align:center;}
 .c42-title{font-family:'Noto Sans SC',sans-serif;font-weight:900;font-size:clamp(26px,6.5cqw,60px);color:#0f172a;line-height:1.2;}
 .c42-sub{font-size:clamp(12px,1.8cqw,16px);color:#64748b;margin-top:12px;}
 
@@ -509,7 +509,7 @@
 .c43{background:#111827;overflow:hidden;}
 .c43-ring1{position:absolute;width:60%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(255,255,255,.05);top:50%;left:50%;transform:translate(-50%,-50%);}
 .c43-ring2{position:absolute;width:80%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(255,255,255,.03);top:50%;left:50%;transform:translate(-50%,-50%);}
-.c43-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 10%;text-align:center;}
+.c43-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:0 10%;text-align:center;}
 .c43-title{font-family:'Noto Sans SC',sans-serif;font-weight:500;font-size:clamp(24px,6cqw,56px);color:#f9fafb;line-height:1.4;letter-spacing:2px;}
 .c43-sub{font-size:clamp(11px,1.6cqw,15px);color:#9ca3af;margin-top:20px;letter-spacing:4px;}
 
@@ -517,7 +517,7 @@
 .c44{background:#fff;border:4px solid #111;}
 .c44-top{position:absolute;top:0;left:0;right:0;height:40px;border-bottom:2px solid #111;display:flex;align-items:center;padding:0 24px;font-family:'Roboto Mono',monospace;font-size:12px;font-weight:500;color:#111;justify-content:space-between;}
 .c44-tag{background:#fef08a;padding:4px 12px;border:1px solid #111;font-size:12px;font-weight:700;margin-bottom:16px;display:inline-block;}
-.c44-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 10%;text-align:center;}
+.c44-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:0 10%;text-align:center;}
 .c44-title{font-family:'Noto Sans SC',sans-serif;font-weight:900;font-size:clamp(26px,7cqw,64px);color:#111;line-height:1.2;}
 .c44-sub{font-size:clamp(13px,2cqw,18px);color:#4b5563;margin-top:16px;}
 
@@ -525,7 +525,7 @@
 .c45{background:#f9f8f6;}
 .c45-c1{position:absolute;width:35%;aspect-ratio:1;border-radius:50%;background:#dbeafe;top:-10%;left:10%;mix-blend-mode:multiply;}
 .c45-c2{position:absolute;width:30%;aspect-ratio:1;border-radius:50%;background:#fce7f3;bottom:-5%;right:15%;mix-blend-mode:multiply;}
-.c45-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 15%;text-align:center;}
+.c45-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:0 15%;text-align:center;}
 .c45-title{font-family:'Noto Serif SC',serif;font-weight:700;font-size:clamp(26px,6.5cqw,60px);color:#334155;line-height:1.3;letter-spacing:1px;}
 .c45-sub{font-size:clamp(12px,1.8cqw,16px);color:#64748b;margin-top:16px;letter-spacing:2px;}
 
@@ -533,21 +533,21 @@
 .c46{background:#fff;overflow:hidden;}
 .c46-bg{position:absolute;bottom:0;right:0;width:150%;height:50%;background:#ffedd5;transform:rotate(-15deg);transform-origin:bottom right;}
 .c46-line{position:absolute;bottom:0;right:0;width:150%;height:50%;border-top:2px solid #fdba74;transform:rotate(-15deg) translateY(-8px);transform-origin:bottom right;}
-.c46-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 10%;text-align:center;}
+.c46-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:0 10%;text-align:center;}
 .c46-title{font-family:'Noto Sans SC',sans-serif;font-weight:900;font-size:clamp(26px,7cqw,64px);color:#1c1917;line-height:1.2;}
 .c46-sub{font-size:clamp(12px,1.8cqw,16px);color:#78716c;margin-top:16px;}
 
 /* ════════════ c47 · 黑金质感 ════════════ */
 .c47{background:#09090b;}
 .c47-line{position:absolute;top:50%;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,#d4af37,transparent);opacity:.5;}
-.c47-wrap{position:relative;z-index:10;padding:24px 40px;background:#09090b;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.c47-wrap{position:relative;z-index:10;padding:24px 40px;background:#09090b;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;text-align:center;}
 .c47-title{font-family:'Noto Serif SC',serif;font-weight:700;font-size:clamp(24px,6cqw,56px);color:#fff;line-height:1.3;letter-spacing:2px;}
 .c47-sub{font-family:'Playfair Display',serif;font-size:clamp(11px,1.6cqw,15px);color:#d4af37;margin-top:16px;letter-spacing:4px;text-transform:uppercase;}
 
 /* ════════════ c48 · 极简焦点 ════════════ */
 .c48{background:#fff;}
 .c48-accent{position:absolute;top:25%;left:50%;transform:translateX(-50%);width:20px;height:20px;background:#ef4444;border-radius:2px;}
-.c48-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:20px;padding:0 10%;text-align:center;}
+.c48-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:0 10%;text-align:center;}
 .c48-title{font-family:'Noto Sans SC',sans-serif;font-weight:700;font-size:clamp(26px,7cqw,64px);color:#111827;line-height:1.2;}
 .c48-sub{font-size:clamp(12px,1.8cqw,16px);color:#6b7280;margin-top:16px;letter-spacing:1px;}
 
@@ -562,21 +562,21 @@
 /* ════════════ c50 · 暗夜微光 ════════════ */
 .c50{background:#18181b;}
 .c50-glow{position:absolute;bottom:-40%;left:20%;right:20%;height:80%;background:radial-gradient(ellipse at center,rgba(139,92,246,.25),transparent 70%);filter:blur(30px);}
-.c50-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 10%;text-align:center;}
+.c50-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:0 10%;text-align:center;}
 .c50-title{font-family:'Noto Sans SC',sans-serif;font-weight:500;font-size:clamp(24px,6cqw,56px);color:#f4f4f5;line-height:1.3;letter-spacing:1px;}
 .c50-sub{font-size:clamp(12px,1.8cqw,16px);color:#a1a1aa;margin-top:16px;}
 
 /* ════════════ c51 · 雅致水墨 ════════════ */
 .c51{background:#f8f9fa;}
 .c51-ink{position:absolute;width:70%;height:100%;top:0;left:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.03),transparent 60%);filter:blur(20px);}
-.c51-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 15%;text-align:center;}
+.c51-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:0 15%;text-align:center;}
 .c51-title{font-family:'Noto Serif SC',serif;font-weight:700;font-size:clamp(26px,6.5cqw,60px);color:#212529;line-height:1.3;letter-spacing:2px;}
 .c51-line{width:2px;height:30px;background:#adb5bd;margin:20px auto;}
 .c51-sub{font-family:'Noto Serif SC',serif;font-size:clamp(12px,1.8cqw,16px);color:#495057;letter-spacing:4px;}
 
 /* ════════════ c52 · 灵动渐变 ════════════ */
 .c52{background:linear-gradient(135deg,#f1f5f9 0%,#cbd5e1 100%);}
-.c52-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 10%;text-align:center;}
+.c52-wrap{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:0 10%;text-align:center;}
 .c52-title{font-family:'Noto Sans SC',sans-serif;font-weight:700;font-size:clamp(26px,6.5cqw,60px);color:#1e293b;line-height:1.2;}
 .c52-sub{font-size:clamp(12px,1.8cqw,16px);color:#475569;margin-top:16px;background:rgba(255,255,255,.4);padding:4px 12px;border-radius:20px;display:inline-block;}
 
