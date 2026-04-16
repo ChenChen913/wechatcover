@@ -2,6 +2,18 @@ import React from 'react';
 import type { CoverConfig, TextLayerConfig } from '@/store/coverStore';
 
 /**
+ * 按固定字数切分文本为多行
+ */
+export function splitTextByChars(text: string, maxChars: number): string[] {
+  if (!text || maxChars <= 0) return [];
+  const lines: string[] = [];
+  for (let i = 0; i < text.length; i += maxChars) {
+    lines.push(text.slice(i, i + maxChars));
+  }
+  return lines;
+}
+
+/**
  * 生成文字图层 inline style（主标题/副标题通用）
  */
 function getTextLayerStyle(
@@ -51,6 +63,17 @@ export function getTitleStyle(config: CoverConfig): React.CSSProperties {
  */
 export function getSubtitleStyle(config: CoverConfig): React.CSSProperties {
   return getTextLayerStyle(config.subtitle, config.textBlock.hAlign);
+}
+
+/**
+ * 生成多行文本容器的 inline style
+ */
+export function getMultilineTextStyle(): React.CSSProperties {
+  return {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.15em',
+  };
 }
 
 /**

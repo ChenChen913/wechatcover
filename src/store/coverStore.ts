@@ -16,6 +16,7 @@ export interface TextLayerConfig {
   useGradient: boolean;
   gradientFrom: string;
   gradientTo: string;
+  maxCharsPerLine: number;
 }
 
 export interface TagConfig {
@@ -65,6 +66,7 @@ export function defaultCoverConfig(): CoverConfig {
       useGradient: false,
       gradientFrom: '#7c6df0',
       gradientTo: '#ec4899',
+      maxCharsPerLine: 8,
     },
     subtitle: {
       content: '深度解析 · 独家视角',
@@ -81,6 +83,7 @@ export function defaultCoverConfig(): CoverConfig {
       useGradient: false,
       gradientFrom: '#7c6df0',
       gradientTo: '#ec4899',
+      maxCharsPerLine: 12,
     },
     tag: {
       visible: true,
