@@ -9,6 +9,7 @@ import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
+import { TEMPLATE_TEXT_SETTINGS, DEFAULT_MAX_CHARS_PER_LINE } from '@/data/templateSettings';
 
 const fontOptions = [
   { value: 'var(--font-noto-sans)', label: 'Noto Sans SC (思源黑体)' },
@@ -740,6 +741,16 @@ export const ControlPanel: React.FC = () => {
       '#ef4444', '#ec4899', '#06b6d4', '#1a1a1a',
     ];
 
+    const templateId = config.templateId;
+    const templateSetting = TEMPLATE_TEXT_SETTINGS[templateId];
+    const userValue = useCoverStore((state) => state.userTemplateSettings[templateId]);
+    const setUserTemplateSetting = useCoverStore((state) => state.setUserTemplateSetting);
+    const resetUserTemplateSetting = useCoverStore((state) => state.resetUserTemplateSetting);
+
+    // 当前有效值：用户值 > 默认值
+    const currentValue = userValue ?? templateSetting?.defaultMaxCharsPerLine ?? DEFAULT_MAX_CHARS_PER_LINE;
+    const hasUserValue = userValue !== undefined;
+
     return (
       <div className="space-y-6">
         {/* 当前模板信息 */}
@@ -748,14 +759,52 @@ export const ControlPanel: React.FC = () => {
             <h4 className="text-sm font-medium">当前模板</h4>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-lg bg-[#7c6df0]/10 flex items-center justify-center text-[#7c6df0] font-bold text-sm">
-                {config.templateId?.toUpperCase().replace('T', '') || '01'}
+                {templateId?.toUpperCase().replace('T', '') || '01'}
               </div>
               <div>
-                <div className="text-sm font-medium">{templateNameMap[config.templateId || '']?.name || '未选择'}</div>
-                <div className="text-xs text-muted-foreground">{templateNameMap[config.templateId || '']?.desc || '请在右侧点击"选择"按钮'}</div>
+                <div className="text-sm font-medium">{templateNameMap[templateId || '']?.name || '未选择'}</div>
+                <div className="text-xs text-muted-foreground">{templateNameMap[templateId || '']?.desc || '请在右侧点击"选择"按钮'}</div>
               </div>
             </div>
             <p className="text-xs text-muted-foreground">如需切换模板，请在右侧封面卡片上点击"选择"按钮</p>
+          </CardContent>
+        </Card>
+
+        {/* 每行最大字数 */}
+        <Card>
+          <CardContent className="pt-4 space-y-4">
+            <h4 className="text-sm font-medium">文字排版</h4>
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="text-xs text-muted-foreground">每行最大字数</label>
+                <span className="text-xs font-medium">{currentValue} 字</span>
+              </div>
+              <Slider
+                value={[currentValue]}
+                onValueChange={(v) => setUserTemplateSetting(templateId, Array.isArray(v) ? v[0] : v)}
+                min={templateSetting?.minMaxCharsPerLine || 4}
+                max={templateSetting?.maxMaxCharsPerLine || 20}
+                step={1}
+              />
+              <div className="flex justify-between text-[10px] text-muted-foreground">
+                <span>紧凑（多行）</span>
+                <span>宽松（少行）</span>
+              </div>
+              <p className="text-[10px] text-muted-foreground">
+                当前模板默认值：{templateSetting?.defaultMaxCharsPerLine || DEFAULT_MAX_CHARS_PER_LINE} 字
+              </p>
+            </div>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => resetUserTemplateSetting(templateId)}
+              disabled={!hasUserValue}
+              className="w-full"
+            >
+              {hasUserValue ? `重置为默认值 (${templateSetting?.defaultMaxCharsPerLine || DEFAULT_MAX_CHARS_PER_LINE})` : '已使用默认值'}
+            </Button>
           </CardContent>
         </Card>
 
@@ -763,7 +812,7 @@ export const ControlPanel: React.FC = () => {
         <Card>
           <CardContent className="pt-4 space-y-3">
             <h4 className="text-sm font-medium">主色调</h4>
-            
+
             <div className="flex items-center gap-3">
               <input
                 type="color"

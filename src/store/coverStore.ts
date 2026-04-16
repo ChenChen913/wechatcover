@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
+import { TEMPLATE_TEXT_SETTINGS, DEFAULT_MAX_CHARS_PER_LINE } from '@/data/templateSettings';
 
 export interface TextLayerConfig {
   content: string;
@@ -64,7 +65,7 @@ export function defaultCoverConfig(): CoverConfig {
       useGradient: false,
       gradientFrom: '#7c6df0',
       gradientTo: '#ec4899',
-      maxCharsPerLine: 8,
+      maxCharsPerLine: 10,
     },
     subtitle: {
       content: '深度解析 · 独家视角',
@@ -110,6 +111,7 @@ interface CoverStore {
   config: CoverConfig;
   activeControlTab: 'text' | 'font' | 'layout' | 'template';
   isExporting: boolean;
+  userTemplateSettings: Record<string, number>;
 
   setMode: (mode: 'web' | 'prompt') => void;
   setConfig: (patch: Partial<CoverConfig>) => void;
@@ -122,14 +124,18 @@ interface CoverStore {
   setActiveControlTab: (tab: 'text' | 'font' | 'layout' | 'template') => void;
   setExporting: (v: boolean) => void;
   resetToDefault: () => void;
+  setUserTemplateSetting: (templateId: string, maxCharsPerLine: number) => void;
+  resetUserTemplateSetting: (templateId: string) => void;
+  getUserTemplateSetting: (templateId: string) => number | undefined;
 }
 
 export const useCoverStore = create<CoverStore>()(
-  immer((set) => ({
+  immer((set, get) => ({
     activeMode: 'web',
     config: defaultCoverConfig(),
     activeControlTab: 'text',
     isExporting: false,
+    userTemplateSettings: {},
 
     setMode: (mode) => set((state) => {
       state.activeMode = mode;
@@ -157,6 +163,11 @@ export const useCoverStore = create<CoverStore>()(
 
     setTemplate: (id) => set((state) => {
       state.config.templateId = id;
+      // 切换模板时，自动加载该模板的配置（用户值 > 默认值）
+      const userValue = state.userTemplateSettings[id];
+      const setting = TEMPLATE_TEXT_SETTINGS[id];
+      const newValue = userValue ?? setting?.defaultMaxCharsPerLine ?? DEFAULT_MAX_CHARS_PER_LINE;
+      state.config.mainTitle.maxCharsPerLine = newValue;
     }),
 
     setPrimaryColor: (color) => set((state) => {
@@ -174,5 +185,21 @@ export const useCoverStore = create<CoverStore>()(
     resetToDefault: () => set((state) => {
       state.config = defaultCoverConfig();
     }),
+
+    setUserTemplateSetting: (templateId, maxCharsPerLine) => set((state) => {
+      state.userTemplateSettings[templateId] = maxCharsPerLine;
+      // 如果当前正在编辑这个模板，同步更新配置
+      if (state.config.templateId === templateId) {
+        state.config.mainTitle.maxCharsPerLine = maxCharsPerLine;
+      }
+    }),
+
+    resetUserTemplateSetting: (templateId) => set((state) => {
+      delete state.userTemplateSettings[templateId];
+    }),
+
+    getUserTemplateSetting: (templateId) => {
+      return get().userTemplateSettings[templateId];
+    },
   }))
 );
