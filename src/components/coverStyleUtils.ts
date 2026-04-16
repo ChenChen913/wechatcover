@@ -1,0 +1,134 @@
+import React from 'react';
+import type { CoverConfig, TextLayerConfig } from '@/store/coverStore';
+
+/**
+ * 生成文字图层 inline style（主标题/副标题通用）
+ */
+function getTextLayerStyle(
+  layer: TextLayerConfig,
+  hAlign: CoverConfig['textBlock']['hAlign']
+): React.CSSProperties {
+  const style: React.CSSProperties = {};
+
+  if (layer.fontFamily) style.fontFamily = layer.fontFamily;
+  style.fontSize = `${layer.fontSize}px`;
+  style.fontWeight = layer.fontWeight;
+  style.fontStyle = layer.fontStyle;
+  style.letterSpacing = `${layer.letterSpacing}em`;
+  style.lineHeight = layer.lineHeight;
+  if (layer.color) style.color = layer.color;
+
+  if (layer.maxWidth < 100) {
+    style.maxWidth = `${layer.maxWidth}%`;
+    style.wordBreak = 'break-word';
+  }
+
+  style.textAlign = hAlign;
+
+  if (layer.useGradient) {
+    style.background = `linear-gradient(135deg, ${layer.gradientFrom}, ${layer.gradientTo})`;
+    style.WebkitBackgroundClip = 'text';
+    style.WebkitTextFillColor = 'transparent';
+    style.backgroundClip = 'text';
+  }
+
+  if (!layer.useGradient && layer.textShadow && layer.textShadow !== 'gradient') {
+    style.textShadow = layer.textShadow;
+  }
+
+  return style;
+}
+
+/**
+ * 生成主标题 inline style
+ */
+export function getTitleStyle(config: CoverConfig): React.CSSProperties {
+  return getTextLayerStyle(config.mainTitle, config.textBlock.hAlign);
+}
+
+/**
+ * 生成副标题 inline style
+ */
+export function getSubtitleStyle(config: CoverConfig): React.CSSProperties {
+  return getTextLayerStyle(config.subtitle, config.textBlock.hAlign);
+}
+
+/**
+ * 生成标签 inline style
+ */
+export function getTagStyle(config: CoverConfig): React.CSSProperties {
+  const { tag } = config;
+  const style: React.CSSProperties = {};
+  if (tag.background) style.background = tag.background;
+  if (tag.borderRadius > 0) style.borderRadius = `${tag.borderRadius}px`;
+  if (tag.paddingX > 0 || tag.paddingY > 0) {
+    style.padding = `${tag.paddingY}px ${tag.paddingX}px`;
+  }
+  return style;
+}
+
+/**
+ * 获取标签文本
+ */
+export function getTagText(config: CoverConfig): string {
+  const { tag } = config;
+  if (!tag.visible) return '';
+  const parts: string[] = [];
+  if (tag.label) parts.push(tag.label);
+  if (tag.separator && tag.text) parts.push(tag.text);
+  else if (tag.text) parts.push(tag.text);
+  return parts.join(tag.separator || '');
+}
+
+/**
+ * 生成文字区域容器 style（布局用）
+ */
+export function getTextLayoutStyle(config: CoverConfig): React.CSSProperties {
+  const { textBlock } = config;
+  const style: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+  };
+
+  style.width = `${textBlock.widthPercent}%`;
+
+  switch (textBlock.hAlign) {
+    case 'left':
+      style.alignItems = 'flex-start';
+      style.textAlign = 'left';
+      style.marginLeft = '0';
+      style.marginRight = 'auto';
+      break;
+    case 'center':
+      style.alignItems = 'center';
+      style.textAlign = 'center';
+      style.marginLeft = 'auto';
+      style.marginRight = 'auto';
+      break;
+    case 'right':
+      style.alignItems = 'flex-end';
+      style.textAlign = 'right';
+      style.marginLeft = 'auto';
+      style.marginRight = '0';
+      break;
+  }
+
+  style.paddingLeft = '0';
+  style.paddingRight = '0';
+
+  switch (textBlock.vAlign) {
+    case 'top':
+      style.justifyContent = 'flex-start';
+      style.paddingTop = `${textBlock.paddingTop}%`;
+      break;
+    case 'middle':
+      style.justifyContent = 'center';
+      break;
+    case 'bottom':
+      style.justifyContent = 'flex-end';
+      style.paddingBottom = `${textBlock.paddingBottom}%`;
+      break;
+  }
+
+  return style;
+}
